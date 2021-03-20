@@ -30,7 +30,7 @@ def handle_inputs(input_array):
         }
 
 def get_inputs(inpts):
-    file_name = ""
+    file_name = "testcases/test1.txt"
     for i in inpts:
         if '.txt' in i:
             file_name = i
@@ -64,7 +64,7 @@ class IndividualGene:
         self.chromosome = chromosome
         self.fitness_val = fitness_val
 
-class StandardGA:
+class DiversityMutationGA:
     '''
     Base class for genetic algorithm. this class will provide basic functions to generate populations, do selection,
     crossover, mutation and etc.
@@ -422,25 +422,25 @@ if __name__ == "__main__":
     item_num = len(params.get('item_values'))
 
     '''
-    Initialize SGA algorithm context
+    Initialize GADM algorithm context
     '''
-    SGA = StandardGA(knapsack_fitness_function, params, "tournament", 0.05, 1, 0.95, 2, True, params.get('tournament_size'))
+    GADM = DiversityMutationGA(knapsack_fitness_function, params, "tournament", 0.05, 1, 0.95, 2, True, params.get('tournament_size'))
 
     '''
     Generate binary population with given binary chromosume length
     '''
-    SGA.generate_binary_population(params.get('pop_size'), item_num)
+    GADM.generate_binary_population(params.get('pop_size'), item_num)
 
     '''
     Do Evaluation and sorting on current population
     '''
-    SGA.evaluate_population()
-    SGA.sort_population()
+    GADM.evaluate_population()
+    GADM.sort_population()
      
     '''
     Selection
     '''
-    parent_list = SGA.select_parents()
+    parent_list = GADM.select_parents()
            
     for index in range(iter_number):
         print("generation: %d start"% index)
@@ -448,30 +448,30 @@ if __name__ == "__main__":
         '''
         Crossover
         '''
-        next_population = SGA.crossover(parent_list)
+        next_population = GADM.crossover(parent_list)
         
         '''
         perform diversity-guided mutation
         A1 = 0 . 01, Az -----0. 25, ks = 0 . 60, k6 = 0.03, and kz --~ 0. 000 01
         '''
-        SGA.mutation_diversity(0.01, 0.25, 0.60, 0.03, 0.00001, params.get('item_values'))
-        next_population = SGA.mutation(next_population)
+        GADM.mutation_diversity(0.01, 0.25, 0.60, 0.03, 0.00001, params.get('item_values'))
+        next_population = GADM.mutation(next_population)
 
         '''
         Mating and update current population
         '''
-        SGA.mating(next_population)
+        GADM.mating(next_population)
         
         '''
         Do Evaluation and sorting on current population
         '''
-        SGA.evaluate_population()
-        SGA.sort_population()
+        GADM.evaluate_population()
+        GADM.sort_population()
 
         '''
         Selection
         '''
-        parent_list = SGA.select_parents()
+        parent_list = GADM.select_parents()
         
         #print("generation: %d finish"%index)
 
