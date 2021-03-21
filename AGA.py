@@ -1,3 +1,9 @@
+'''
+Adaptive Probabilities of Crossover
+and Mu tation in Genetic Algorithms
+M. Srinivas, and L. M. Patnaik, Fellow, ZEEE
+'''
+
 import sys
 import random
 import numpy
